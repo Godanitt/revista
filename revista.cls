@@ -164,7 +164,7 @@
     % #3: estilo da páxina, cambia os encabezados (e no futuro pode que mais
     %     cousas) A escoller entre:
     %     divulgacion,historia,actualidadeFacultade,actualidadeCientifica,
-    %     filosofia,entrevistas,programacion,pasatempos,anuncios
+    %     filosofia,entrevistas,programacion,pasatempos,anuncios,profesorado
     % #4: subtítulo do artigo
     \pagestyle{#3}
     \addchaptersummary{#1}{#4}{#2} % Aqui introducimos lo que se va a colocar en el indice, véase arriba el significado
@@ -316,6 +316,16 @@
     \fancyhf{}
     \renewcommand{\headrulewidth}{0.4pt}
     \fancyhead[RE,LO]{ANUNCIOS}
+    \fancyfoot[LE,RO]{\thepage}
+    \fancyfoot[RE,LO]{\imprimeTitulo}
+    \renewcommand{\footrulewidth}{0pt}
+}
+
+% seccions do RINCON DO PROFESORADO
+\fancypagestyle{profesorado}{
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0.4pt}
+    \fancyhead[RE,LO]{RINCÓN DO PROFESORADO}
     \fancyfoot[LE,RO]{\thepage}
     \fancyfoot[RE,LO]{\imprimeTitulo}
     \renewcommand{\footrulewidth}{0pt}
