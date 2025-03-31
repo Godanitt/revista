@@ -53,6 +53,10 @@
 % Cores. En cada artigo usamos \definecolor{}{} pa coller o que queremos
 \RequirePackage{xcolor}
 
+% Inicializo as coreas agora. En cada artigo é necesario cambialas
+\definecolor{Resalte}{HTML}{ff0000}
+\definecolor{TextoEnResalte}{HTML}{ffffff}
+
 % Graficos e tal. Se podes soñalo, podes facelo con TikZ
 \RequirePackage{tikz}
  % para facer calculos cas posicions dos nodos, sumándolle cousas
@@ -89,6 +93,11 @@
 
 % esto é pa mostrar as box, hyphenation points, glues, etc. Útil para depurar
 %\RequirePackage{lua-visual-debug}
+
+% E xa que falamos de depuración, está o comando este pa mostrar todos os
+% paquetes que se usan (implícita e explícitamente) e súas versións. Toda esa
+% info gárdase no *.log, de cara ao final logo dunha liña que pon *File List*
+\listfiles
 
 % :FACER: como usar duas columnas?
 % Por agora usamos a opcion 'twocolumn' da clase 'article'. Eventualmente
@@ -155,6 +164,27 @@
 %     Path      = ./fontes/EulerMath/,
 %     Extension = .otf,
 % ]{Euler-Math}
+
+% Para el índice
+\RequirePackage{tocloft}   % Para modificar algunos valores de contentsline, espaciados etc
+\RequirePackage{adjustbox} % Para ajustar tablas
+
+\newcommand{\addchaptersummary}[3]{ % Hay que introducirle tres cosas #1 -> Nombre del artículo, #2 -> Resumen del artículo, #3 -> Nombre del autor
+    \phantomsection
+    \addcontentsline{toc}{section}{\protect{#1}} % Esta añadiendo el artículo al tableofcontentse
+    \addtocontents{toc}{
+        \protect
+        \begin{minipage}[t][.3cm][t]{9cm} % Definindo largura fixa para a minipage de texto com alinhamento superior
+            % Ajuste fino para alinhar o resumo do texto com o topo da figura (altere de acordo com o topo da figura)
+            \protect {\scriptsize #2}
+            \protect\vfill% Ajuste fino para alinhar o nome do autor do texto con el nombre del artículo
+            \protect{\small #3}
+            \protect\vfill% Ajuste fino para alinhar o nome do autor do texto com el resumen
+            \protect\vspace{1cm} % Ajuste fino para espaçamento entre figura e resumo e próximo artigo do sumário
+            \protect
+        \end{minipage}\vfill}
+    \addtocontents{toc}{\vspace{2em}}
+}
 
 % :FACER: facer o subtitulo opcional (con \NewDocumentCommand e \IfNoValueTF)
 % Un dos comandos máis importantes. Debe usarse ao comezo de cada artigo.
