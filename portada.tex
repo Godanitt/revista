@@ -13,6 +13,7 @@
 \setlength\parindent{0pt}
 
 % TITULO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% :FACER: borrar esto
 %\vspace*{1em}
 %{%
 %    \begin{center}%
@@ -51,8 +52,6 @@
 
 % IMAXE DE CADA REVISTA %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % A imaxe da portada debe ser CADRADA EXACTAMENTE
-
-
 {
 \nointerlineskip
 \begin{picture}(\textwidth,\textwidth)%
@@ -61,6 +60,7 @@
 }
 
 % ARTIGOS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% :FACER: 0 borrar esto
 %\begin{minipage}{\textwidth}
 %    \centering
     % \setstretch{2} % esto dos espaciados dame dores de cabeza...
@@ -69,8 +69,9 @@
 %    \includegraphics[width=2.5cm]{logos/usc-branco-negro.eps}
 %\end{minipage}%
 
-% Imagenes superpuestas en la imagen principal 
+% Imagenes superpuestas en la imagen principal
 
+% :FACER: 0 Meter o texto este nun macro e definilo en cada revista
 % En el documento8
 \begin{tikzpicture}[remember picture, overlay]
     % Imagen 1 (superpuesta)
@@ -85,7 +86,7 @@
     {\normalsize \textcolor{white}{{\textbf{1981: Primeira pedra da facultade de física.}}}};
 
     % Imagen 2 (superpuesta)
-    \node[anchor=south west, xshift=16.7cm, yshift=3.cm] at (current page.south west) 
+    \node[anchor=south west, xshift=16.7cm, yshift=3.cm] at (current page.south west)
     {\includegraphics[width=3cm]{logos/usc-invertido.png}};
 \end{tikzpicture}
 

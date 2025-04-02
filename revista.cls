@@ -92,7 +92,7 @@
 }
 
 % esto é pa mostrar as box, hyphenation points, glues, etc. Útil para depurar
-%\RequirePackage{lua-visual-debug}
+% \RequirePackage{lua-visual-debug}
 
 % E xa que falamos de depuración, está o comando este pa mostrar todos os
 % paquetes que se usan (implícita e explícitamente) e súas versións. Toda esa
@@ -137,67 +137,82 @@
 %     Extension = .otf,
 % ]{Euler-Math}
 
-% Para el índice
+% Para o índice
 \RequirePackage{tocloft}   % Para modificar algunos valores de contentsline, espaciados etc
 \RequirePackage{adjustbox} % Para ajustar tablas
 \RequirePackage{etoolbox}  % Para hacer condicionales
 \RequirePackage{trimspaces}
 
 
-\newcommand{\IndiceDivulgacion}{\begin{tikzpicture}
-    \draw[thick] (0,0) -- (4,0);
-    \node[anchor=center] at (5.5,0)  {\textbf{Divulgacion}};
-    \draw[thick] (7,0) -- (11,0);
-  \end{tikzpicture}}
-\newcommand{\IndiceFilosofia}{\begin{tikzpicture}
-    \draw[thick] (0,0) -- (4,0);
-    \node[anchor=center] at (5.5,0) {\textbf{Filosofía}};
-    \draw[thick] (7,0) -- (11,0);
-  \end{tikzpicture}}
-\newcommand{\IndiceHistoria}{\begin{tikzpicture}
-    \draw[thick] (0,0) -- (4,0);
-    \node[anchor=center] at (5.5,0) {\textbf{Historia}};
-    \draw[thick] (7,0) -- (11,0);
-  \end{tikzpicture}}
-\newcommand{\IndiceProfesorado}{\begin{tikzpicture}
-    \draw[thick] (0,0) -- (2.9,0);
-    \node[anchor=center] at (5.5,0) {\textbf{Recuncho do Profesorado}};
-    \draw[thick] (8.1,0) -- (11,0);
-\end{tikzpicture}}
-\newcommand{\IndiceEntrevistas}{\begin{tikzpicture}
-    \draw[thick] (0,0) -- (4,0);
-    \node[anchor=center] at (5.5,0)  {\textbf{Entrevistas}};
-    \draw[thick] (7,0) -- (11,0);
-\end{tikzpicture}}
+% :FACER: 0 simplificar esto todo. Tal vez colocar as cadeas en arrays.
+% comandos que crean as liñas de separacion para organizar por temáticas o
+% indice
+\newcommand{\IndiceDivulgacion}{
+    \begin{tikzpicture}
+        \draw[thick] (0,0) -- (4,0);
+        \node[anchor=center] at (5.5,0)  {\textbf{Divulgacion}};
+        \draw[thick] (7,0) -- (11,0);
+    \end{tikzpicture}
+}
+\newcommand{\IndiceFilosofia}{
+    \begin{tikzpicture}
+        \draw[thick] (0,0) -- (4,0);
+        \node[anchor=center] at (5.5,0) {\textbf{Filosofía}};
+        \draw[thick] (7,0) -- (11,0);
+    \end{tikzpicture}
+}
+\newcommand{\IndiceHistoria}{
+    \begin{tikzpicture}
+        \draw[thick] (0,0) -- (4,0);
+        \node[anchor=center] at (5.5,0) {\textbf{Historia}};
+        \draw[thick] (7,0) -- (11,0);
+    \end{tikzpicture}
+}
+\newcommand{\IndiceProfesorado}{
+    \begin{tikzpicture}
+        \draw[thick] (0,0) -- (2.9,0);
+        \node[anchor=center] at (5.5,0) {\textbf{Recuncho do Profesorado}};
+        \draw[thick] (8.1,0) -- (11,0);
+    \end{tikzpicture}
+}
+\newcommand{\IndiceEntrevistas}{
+    \begin{tikzpicture}
+        \draw[thick] (0,0) -- (4,0);
+        \node[anchor=center] at (5.5,0)  {\textbf{Entrevistas}};
+        \draw[thick] (7,0) -- (11,0);
+    \end{tikzpicture}
+}
 
+% :FACER: 0 simplificar esto con expl3
 \newcommand{\TipoDeArticulo}[1]{%
-\ifstrequal{#1}{divulgacion}{\IndiceDivulgacion}{%
-  \ifstrequal{#1}{historia}{\IndiceHistoria}{%
-    \ifstrequal{#1}{filosofia}{\IndiceFilosofia}{%
-      \ifstrequal{#1}{profesorado}{\IndiceProfesorado}{%
-        \ifstrequal{#1}{entrevistas}{\IndiceEntrevistas}{%
-          \IndiceEntrevistas
+    \ifstrequal{#1}{divulgacion}{\IndiceDivulgacion}{%
+        \ifstrequal{#1}{historia}{\IndiceHistoria}{%
+            \ifstrequal{#1}{filosofia}{\IndiceFilosofia}{%
+                \ifstrequal{#1}{profesorado}{\IndiceProfesorado}{%
+                    \ifstrequal{#1}{entrevistas}{\IndiceEntrevistas}{%
+                        \IndiceEntrevistas
+                    }%
+                }%
+            }%
         }%
-      }%
     }%
-  }%
-}%
 }
 
+% :FACER: 0 ver que fai esto e seguramente simplificalo.
 \newcommand{\SioNo}[2]{%
-  \edef\cleanedinput{\unexpanded{#1}}%
-  \edef\cleanedinput{\expandafter\trimspaces\cleanedinput}%
-  \ifdefstring{\cleanedinput}{Si}{%
-    \TipoDeArticulo{#2}\\[2mm]%
-  }{%
-    \vspace{-5mm}
-  }%
+    \edef\cleanedinput{\unexpanded{#1}}%
+    \edef\cleanedinput{\expandafter\trimspaces\cleanedinput}%
+    \ifdefstring{\cleanedinput}{Si}{%
+        \TipoDeArticulo{#2}\\[2mm]%
+    }{%
+        \vspace{-5mm}
+    }%
 }
- % Hay que introducirle 4 cosas 
- %#1 -> Nombre del artículo, 
- %#2 -> NOmbre del autor del artículo, 
- %#3 -> Si: queremos que empiece una sección en el indice 
- %#4 -> Si #3=Si -> Crea una nueva sección en el índice 
+ % Hay que introducirle 4 cosas
+ %#1 -> Nombre del artículo,
+ %#2 -> NOmbre del autor del artículo,
+ %#3 -> Si: queremos que empiece una sección en el indice
+ %#4 -> Si #3=Si -> Crea una nueva sección en el índice
 \newcommand{\addchaptersummary}[4]{%
     \phantomsection
     \addtocontents{toc}{%
@@ -219,6 +234,7 @@
     \addtocontents{toc}{\vspace{2em}}
 }
 
+% :FACER: 0 xunto cas cousas anteriores, simplificar esto
 % :FACER: facer o subtitulo opcional (con \NewDocumentCommand e \IfNoValueTF)
 % Un dos comandos máis importantes. Debe usarse ao comezo de cada artigo.
 \newcommand{\titular}[5]{%
@@ -236,7 +252,7 @@
         \vspace*{-1cm}
         % Esto es para que cuanddo el texto ocupe más de dos líneas, se amplie
         \begingroup
-        \setstretch{2} 
+        \setstretch{2}
         \noindent{\color{Resalte}\Huge \textbf{#1}} \\
         \endgroup
         %
@@ -252,7 +268,11 @@
 }
 
 % Esto pa cambiar facilmente o estilo das 'captions' das cousas. Queremos que este justificada
-\RequirePackage[justification=justified,singlelinecheck=false]{caption} %  singlelinecheck=false: evita que LaTeX centre pies de una sola línea (por defecto, lo hace aunque hayas pedido justificación).
+% singlelinecheck=false: evita que LaTeX centre pies de una sola línea (por defecto, lo hace aunque hayas pedido justificación).
+\RequirePackage[
+    justification   = justified,
+    singlelinecheck = false
+]{caption}
 \captionsetup[figure]{ labelfont=bf }
 \captionsetup[table]{ labelfont=bf }
 
@@ -291,6 +311,8 @@
     \end{tikzpicture}
 
 }
+
+% :FACER: 0 case seguro que este se pode borrar
 \newcommand{\Logodos}{
     \begin{tikzpicture}
         \node[
@@ -318,6 +340,9 @@
     \hrulefill
 }
 
+% :FACER: 0 esto pode acortarse con arrays, e deberíase xuntar toda a
+% funcionalidade de encabezados e titulos e así
+
 % artigos de DIVULGACION
 \fancypagestyle{divulgacion}{
     \fancyhf{}
@@ -327,7 +352,6 @@
     \fancyfoot[LO,RE]{\imprimeTitulo}
     \renewcommand{\footrulewidth}{0pt}
     \headsep = 1.5cm
-    
 }
 
 % artigos de HISTORIA
@@ -361,7 +385,6 @@
     \fancyfoot[LO,RE]{\imprimeTitulo}
     \renewcommand{\footrulewidth}{0pt}
     \headsep = 1.5cm
-
 }
 
 % artigos de FILOSOFIA
@@ -405,8 +428,8 @@
     \fancyfoot[LE,RO]{\thepage}
     \fancyfoot[LO,RE]{\imprimeTitulo}
     \renewcommand{\footrulewidth}{0pt}
-
-    \headsep = 1.5cm}
+    \headsep = 1.5cm
+}
 
 % seccions de ANUNCIOS
 \fancypagestyle{anuncios}{
@@ -446,6 +469,7 @@
     urlcolor  = {blue!80!black}   % URLs e links externos
 }
 
+% :FACER: macros e todo eso de aqui en abaixo. Mellor organizacion
 %% MACROS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \makeatletter

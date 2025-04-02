@@ -1,8 +1,12 @@
 
 % Color del resalte trasparentado a la derecha del índice
 \begin{tikzpicture}[remember picture, overlay]
-    \draw[line width=0.73\textwidth,color=Resalte!65!white] ($(current page.north east) - (0,0)$) -- ($(current page.south east) - (0,0)$);
+    \draw[
+        line width = 0.73\textwidth,
+        color      = Resalte!65!white
+    ] ($(current page.north east) - (0,0)$) -- ($(current page.south east) - (0,0)$);
 \end{tikzpicture}
+
 % Columna de la izqueirda, está el índice y el Sobre Momentum:
 \begin{minipage}[t]{0.72\textwidth}
     \vspace{-0.3cm}
@@ -25,36 +29,59 @@
         \begin{minipage}[t]{0.9\textwidth}
             \vfill
             \vspace{2cm}
-            {\Huge \color{Resalte!75!black} \textbf{Sobre Momentum}:} \\[1cm]Tras uns cuantos meses de traballo, por fín podemos dar saída á nova revista estudiantil \textit{momentum}, unha revista que busca ser un medio de comunicación tanto dentro coma fóra da facultade de física onde expor os intereses científicos do estudantado. Cuestións de Divulgación, Actualidade, Entrevistas, Historia, Filosofía da Ciencia, Opinión, Programación... Son todos temas que teñen cabida dentro deste proxecto. Esta revista está realizada integramente polo estudantado da Facultade de Física USC, onde pretendemos ter un recuncho de expresión máis aló do estrictamente académico. Fundada no ano 2025 co obxectivo de persistir na historia, esforzámonos sempre en mellorar. Non dubidedes en deixar a vosa pegada!
+            {\Huge \color{Resalte!75!black} \textbf{Sobre Momentum}:}
+            \\[1cm]
+            Tras uns cuantos meses de traballo, por fín podemos dar saída á nova
+            revista estudiantil MOMENTUM, unha revista que busca ser un medio de
+            comunicación tanto dentro coma fóra da facultade de física onde expor os
+            intereses científicos do estudantado. Cuestións de Divulgación, Actualizade,
+            Entrevistas, Historia, Filosofía da Ciencia, Opinión… Son todos temas que teñen
+            cabida dentro deste proxecto. Esta revista está realizada integramente polo
+            estudantado da Facultade de Física USC, onde pretendemos ter un recuncho de
+            expresión máis aló do estrictamente académico. Fundada no ano 2025 co obxectivo
+            de persistir na historia, esforzámonos sempre en mellora. Non dubidedes en
+            deixar a vosa pegada!
         \end{minipage}
     \end{minipage}
 \end{minipage}
 \hfill
+
 % Texto que está en la linea roja trasparente, logos y autores/editores/directores
+
+% :FACER: 0 usar color de Texto en Resalte
+% :FACER: 0 numero da revista usando macro
 \begin{minipage}[t]{0.28\textwidth}
     \vspace{-0.3cm}
     \hspace{-0.7cm}
     \begin{center}
         \textcolor{white}{\Large
-        \textbf{\today }\\[5mm]
-        \textbf{Número 001} \\[1.5cm]
+            \textbf{\today }\\[5mm]
+            \textbf{Número 001} \\[1.5cm]
         }
-    \end{center} 
+    \end{center}
     \Autores \\[1.5cm]
     \begin{tikzpicture}[scale=1.5]
-       % \draw[thick, white] (0,0.5) -- (2.85,0.5);
-        \node at (0,0) {\includegraphics[width=0.7cm]{logos/GitHub-branco.png}};   
+        \node at (0,0) {\includegraphics[width=0.7cm]{logos/GitHub-branco.png}};
         \begingroup
-        \hypersetup{urlcolor=white}
-        \node[anchor=west,align=left] at (0.5,0) {\textbf{\textcolor{white}{\href{https://github.com/DAF-USC/revista}{GitHub}
-        }}};
+            \hypersetup{urlcolor=white}
+            \node[
+                anchor=west,
+                align=left
+            ] at (0.5,0)
+            {
+                \textbf{\textcolor{white}{\href{https://github.com/DAF-USC/revista}{GitHub}}}
+            };
         \endgroup
         \node at (0,-1) {\includegraphics[width=0.7cm]{logos/Icone_Email.png}};
-        \node[anchor=west,align=left] at (0.5,-1) {\footnotesize \textbf{\textcolor{white}{revistafisicausc@gmail.com}
-        }};
-     %   \draw[thick, white] (0,-1.5) -- (2.58,-1.5);
+        \node[
+            anchor=west,
+            align=left
+        ] at (0.5,-1)
+        {
+            \footnotesize \textbf{\textcolor{white}{revistafisicausc@gmail.com} }
+        };
     \end{tikzpicture} \\[1.7cm]
     \begin{center}
-    \includegraphics[width=0.8\linewidth]{./logos/usc-invertido.png} % Logo 2
+        \includegraphics[width=0.8\linewidth]{./logos/usc-invertido.png} % Logo 2
     \end{center}
 \end{minipage}
