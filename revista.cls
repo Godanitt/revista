@@ -86,7 +86,7 @@
     top         = 20mm,    % marxe superior
     left        = 10mm,    % marxe esquerdo
     right       = 10mm,    % marxe dereito
-    bottom      = 20mm,    % marxe inferior
+    bottom      = 25mm,    % marxe inferior
     nomarginpar = true,    % desactivar marxe para notas
     % showframe,            % mostra estructura, moi util
 }
@@ -106,6 +106,7 @@
 % https://www.overleaf.com/learn/latex/Multiple_columns
 % https://tex.stackexchange.com/a/285444
 \RequirePackage{multicol}
+\setlength{\columnsep}{5mm}
 
 % Pa cambiar interlineados no momento usando \setstrech{}
 \usepackage{setspace}
@@ -129,35 +130,6 @@
 \RequirePackage{svrsymbols} % simbolos variados
 \RequirePackage{adforn}     %
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Para el índice 
-
-\RequirePackage{tocloft}   % Para modificar algunos valores de contentsline, espaciados etc
-\RequirePackage{adjustbox} % Para ajustar tablas
-
-%\renewcommand{\contentsname}{\Huge \textbf{Indice}}   %  Cambia el nombre del índice, parece que no funciona bien
-
-
-\newcommand{\addchaptersummary}[3]{ % Hay que introducirle tres cosas #1 -> Nombre del artículo, #2 -> Resumen del artículo, #3 -> Nombre del autor
-  \phantomsection
-  \addcontentsline{toc}{section}{\protect{#1}} % Esta añadiendo el artículo al tableofcontentse
-  \addtocontents{toc}{
-    \protect\begin{minipage}[t][.3cm][t]{9cm} % Definindo largura fixa para a minipage de texto com alinhamento superior
-       % Ajuste fino para alinhar o resumo do texto com o topo da figura (altere de acordo com o topo da figura)
-      \protect {\scriptsize #2}
-      \protect\vfill% Ajuste fino para alinhar o nome do autor do texto con el nombre del artículo
-      \protect{\small #3} 
-      \protect\vfill% Ajuste fino para alinhar o nome do autor do texto com el resumen
-      \protect\vspace{1cm} % Ajuste fino para espaçamento entre figura e resumo e próximo artigo do sumário
-    \protect\end{minipage}\vfill}
-    \addtocontents{toc}{\vspace{2em}}
-}
-
-
-%[t]{7em}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% este debe cargarse logo dos paquetes matematicos
 \RequirePackage{unicode-math}
 % :FACER: escoller outra tipografia para as mates, esta non ten varios simbolos
 % \setmathfont[
@@ -168,17 +140,78 @@
 % Para el índice
 \RequirePackage{tocloft}   % Para modificar algunos valores de contentsline, espaciados etc
 \RequirePackage{adjustbox} % Para ajustar tablas
+\RequirePackage{etoolbox}  % Para hacer condicionales
+\RequirePackage{trimspaces}
 
-\newcommand{\addchaptersummary}[3]{ % Hay que introducirle tres cosas #1 -> Nombre del artículo, #2 -> Resumen del artículo, #3 -> Nombre del autor
+
+\newcommand{\IndiceDivulgacion}{\begin{tikzpicture}
+    \draw[thick] (0,0) -- (4,0);
+    \node[anchor=center] at (5.5,0)  {\textbf{Divulgacion}};
+    \draw[thick] (7,0) -- (11,0);
+  \end{tikzpicture}}
+\newcommand{\IndiceFilosofia}{\begin{tikzpicture}
+    \draw[thick] (0,0) -- (4,0);
+    \node[anchor=center] at (5.5,0) {\textbf{Filosofía}};
+    \draw[thick] (7,0) -- (11,0);
+  \end{tikzpicture}}
+\newcommand{\IndiceHistoria}{\begin{tikzpicture}
+    \draw[thick] (0,0) -- (4,0);
+    \node[anchor=center] at (5.5,0) {\textbf{Historia}};
+    \draw[thick] (7,0) -- (11,0);
+  \end{tikzpicture}}
+\newcommand{\IndiceProfesorado}{\begin{tikzpicture}
+    \draw[thick] (0,0) -- (2.9,0);
+    \node[anchor=center] at (5.5,0) {\textbf{Recuncho do Profesorado}};
+    \draw[thick] (8.1,0) -- (11,0);
+\end{tikzpicture}}
+\newcommand{\IndiceEntrevistas}{\begin{tikzpicture}
+    \draw[thick] (0,0) -- (4,0);
+    \node[anchor=center] at (5.5,0)  {\textbf{Entrevistas}};
+    \draw[thick] (7,0) -- (11,0);
+\end{tikzpicture}}
+
+\newcommand{\TipoDeArticulo}[1]{%
+\ifstrequal{#1}{divulgacion}{\IndiceDivulgacion}{%
+  \ifstrequal{#1}{historia}{\IndiceHistoria}{%
+    \ifstrequal{#1}{filosofia}{\IndiceFilosofia}{%
+      \ifstrequal{#1}{profesorado}{\IndiceProfesorado}{%
+        \ifstrequal{#1}{entrevistas}{\IndiceEntrevistas}{%
+          \IndiceEntrevistas
+        }%
+      }%
+    }%
+  }%
+}%
+}
+
+\newcommand{\SioNo}[2]{%
+  \edef\cleanedinput{\unexpanded{#1}}%
+  \edef\cleanedinput{\expandafter\trimspaces\cleanedinput}%
+  \ifdefstring{\cleanedinput}{Si}{%
+    \TipoDeArticulo{#2}\\[2mm]%
+  }{%
+    \vspace{-5mm}
+  }%
+}
+ % Hay que introducirle 4 cosas 
+ %#1 -> Nombre del artículo, 
+ %#2 -> NOmbre del autor del artículo, 
+ %#3 -> Si: queremos que empiece una sección en el indice 
+ %#4 -> Si #3=Si -> Crea una nueva sección en el índice 
+\newcommand{\addchaptersummary}[4]{%
     \phantomsection
+    \addtocontents{toc}{%
+    \begingroup
+    \setlength{\parindent}{0pt}
+    \protect\SioNo{#3}{#4}
+    \endgroup}
     \addcontentsline{toc}{section}{\protect{#1}} % Esta añadiendo el artículo al tableofcontentse
     \addtocontents{toc}{
-        \protect
         \begin{minipage}[t][.3cm][t]{9cm} % Definindo largura fixa para a minipage de texto com alinhamento superior
             % Ajuste fino para alinhar o resumo do texto com o topo da figura (altere de acordo com o topo da figura)
-            \protect {\scriptsize #2}
-            \protect\vfill% Ajuste fino para alinhar o nome do autor do texto con el nombre del artículo
-            \protect{\small #3}
+            %\protect {\scriptsize #2}
+            %\protect\vfill% Ajuste fino para alinhar o nome do autor do texto con el nombre del artículo
+            \protect{\small #2}
             \protect\vfill% Ajuste fino para alinhar o nome do autor do texto com el resumen
             \protect\vspace{1cm} % Ajuste fino para espaçamento entre figura e resumo e próximo artigo do sumário
             \protect
@@ -188,20 +221,25 @@
 
 % :FACER: facer o subtitulo opcional (con \NewDocumentCommand e \IfNoValueTF)
 % Un dos comandos máis importantes. Debe usarse ao comezo de cada artigo.
-\newcommand{\titular}[4]{%
+\newcommand{\titular}[5]{%
     % #1: nome do artigo,
     % #2: nome do autor,
     % #3: estilo da páxina, cambia os encabezados (e no futuro pode que mais
     %     cousas) A escoller entre:
     %     divulgacion,historia,actualidadeFacultade,actualidadeCientifica,
     %     filosofia,entrevistas,programacion,pasatempos,anuncios,profesorado
-    % #4: subtítulo do artigo
+    % #4: subtítulo do artigoprofesorado
+    % #5: es el #3 del índice, véase arriba \addchaptersummary
     \pagestyle{#3}
-    \addchaptersummary{#1}{#4}{#2} % Aqui introducimos lo que se va a colocar en el indice, véase arriba el significado
+    \addchaptersummary{#1}{#2}{#5}{#3} % Aqui introducimos lo que se va a colocar en el indice, véase arriba el significado
     \begin{center}
-        \vspace*{1em}
-        \noindent
-        {\color{Resalte}\Huge \textbf{#1}} \\
+        \vspace*{-1cm}
+        % Esto es para que cuanddo el texto ocupe más de dos líneas, se amplie
+        \begingroup
+        \setstretch{2} 
+        \noindent{\color{Resalte}\Huge \textbf{#1}} \\
+        \endgroup
+        %
         \vspace{3mm}
         {\Large #2} \\
         \vspace{3mm}
@@ -213,8 +251,8 @@
     \setcounter{figure}{0}
 }
 
-% Esto pa cambiar facilmente o estilo das 'captions' das cousas
-\RequirePackage[justification=centering]{caption}
+% Esto pa cambiar facilmente o estilo das 'captions' das cousas. Queremos que este justificada
+\RequirePackage[justification=justified,singlelinecheck=false]{caption} %  singlelinecheck=false: evita que LaTeX centre pies de una sola línea (por defecto, lo hace aunque hayas pedido justificación).
 \captionsetup[figure]{ labelfont=bf }
 \captionsetup[table]{ labelfont=bf }
 
@@ -226,6 +264,7 @@
 \RequirePackage{ragged2e}
 \RequirePackage[scr]{rsfso}
 \RequirePackage{adjustbox}
+\RequirePackage{ragged2e} % Para justificar minipages
 
 % Encabezados e pe de paxina
 % Pa facilitar a creacion cun par de comandos
@@ -247,10 +286,28 @@
             radius    = 0.5,
             inner sep = 1pt,
         ]
-        at (0,0)
-        {$\vec{m}$};
+        at (00.05,-0.05)
+        {$\overrightarrow{m}$};
+    \end{tikzpicture}
+
+}
+\newcommand{\Logodos}{
+    \begin{tikzpicture}
+        \node[
+            shape     = circle,
+            draw      = black,
+            fill      = Resalte,
+            text      = TextoEnResalte,
+            inner sep = 0pt,
+            radius    = 0.5,
+            inner sep = 1pt,
+        ]
+        at (00.05,-0.05)
+        {$\overrightarrow{m}$};
     \end{tikzpicture}
 }
+
+
 
 % esto e pa poñer o logo do momento no encabezado
 \renewcommand\headrule{
@@ -269,6 +326,8 @@
     \fancyfoot[LE,RO]{\thepage}
     \fancyfoot[RE,LO]{\imprimeTitulo}
     \renewcommand{\footrulewidth}{0pt}
+    \headsep = 1.5cm
+    
 }
 
 % artigos de HISTORIA
@@ -279,6 +338,7 @@
     \fancyfoot[LE,RO]{\thepage}
     \fancyfoot[RE,LO]{\imprimeTitulo}
     \renewcommand{\footrulewidth}{0pt}
+    \headsep = 1.5cm
 }
 
 % artigos de ACTUALIDADE DA FACULTADE
@@ -289,6 +349,7 @@
     \fancyfoot[LE,RO]{\thepage}
     \fancyfoot[RE,LO]{\imprimeTitulo}
     \renewcommand{\footrulewidth}{0pt}
+    \headsep = 1.5cm
 }
 
 % artigos de ACTUALIDADE CIENTIFICA
@@ -299,6 +360,8 @@
     \fancyfoot[LE,RO]{\thepage}
     \fancyfoot[RE,LO]{\imprimeTitulo}
     \renewcommand{\footrulewidth}{0pt}
+    \headsep = 1.5cm
+
 }
 
 % artigos de FILOSOFIA
@@ -309,6 +372,7 @@
     \fancyfoot[LE,RO]{\thepage}
     \fancyfoot[RE,LO]{\imprimeTitulo}
     \renewcommand{\footrulewidth}{0pt}
+    \headsep = 1.5cm
 }
 
 % artigos de ENTREVISTAS
@@ -319,6 +383,7 @@
     \fancyfoot[LE,RO]{\thepage}
     \fancyfoot[RE,LO]{\imprimeTitulo}
     \renewcommand{\footrulewidth}{0pt}
+    \headsep = 1.5cm
 }
 
 % artigos de PROGRAMACIÓN
@@ -329,6 +394,7 @@
     \fancyfoot[LE,RO]{\thepage}
     \fancyfoot[RE,LO]{\imprimeTitulo}
     \renewcommand{\footrulewidth}{0pt}
+    \headsep = 1.5cm
 }
 
 % seccions de PASATEMPOS
@@ -339,7 +405,8 @@
     \fancyfoot[LE,RO]{\thepage}
     \fancyfoot[RE,LO]{\imprimeTitulo}
     \renewcommand{\footrulewidth}{0pt}
-}
+
+    \headsep = 1.5cm}
 
 % seccions de ANUNCIOS
 \fancypagestyle{anuncios}{
@@ -349,16 +416,18 @@
     \fancyfoot[LE,RO]{\thepage}
     \fancyfoot[RE,LO]{\imprimeTitulo}
     \renewcommand{\footrulewidth}{0pt}
+    \headsep = 1.5cm
 }
 
 % seccions do RINCON DO PROFESORADO
 \fancypagestyle{profesorado}{
     \fancyhf{}
     \renewcommand{\headrulewidth}{0.4pt}
-    \fancyhead[RE,LO]{RINCÓN DO PROFESORADO}
+    \fancyhead[RE,LO]{RECUNCHO DO PROFESORADO}
     \fancyfoot[LE,RO]{\thepage}
     \fancyfoot[RE,LO]{\imprimeTitulo}
     \renewcommand{\footrulewidth}{0pt}
+    \headsep = 1.5cm
 }
 
 % Tipografia preciosa. Xoga cos espaciados moi ben para xustificar o texto.
@@ -372,7 +441,7 @@
 \hypersetup{
     hidelinks,
     colorlinks,  % Colorear os links
-    linkcolor = {red!55!black},   % links internos
+    linkcolor = {Resalte!55!black},   % links internos
     citecolor = {green!45!black}, % citas bibliográficas
     urlcolor  = {blue!80!black}   % URLs e links externos
 }
@@ -406,6 +475,7 @@
 % RUTA PARA A IMAXE DA PORTADA
 \def\ImaxePortada#1{\def\@ImaxePortada{#1}}
 \newcommand{\imprimeImaxePortada}{\@ImaxePortada}
+\setlength{\headheight}{20pt}
 
 \makeatother
 % Todos esos comandos teñen a info da revista. Gardase o valor nunha variable,
