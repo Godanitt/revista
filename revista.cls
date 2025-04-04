@@ -138,9 +138,9 @@
 % ]{Euler-Math}
 
 % Para o índice
-\RequirePackage{tocloft}   % Para modificar algunos valores de contentsline, espaciados etc
-\RequirePackage{adjustbox} % Para ajustar tablas
-\RequirePackage{etoolbox}  % Para hacer condicionales
+\RequirePackage{tocloft}    % Para modificar algunos valores de contentsline, espaciados etc
+\RequirePackage{adjustbox}  % Para ajustar tablas
+\RequirePackage{etoolbox}   % Para hacer condicionales
 \RequirePackage{trimspaces}
 
 
@@ -184,7 +184,7 @@
 }
 
 % :FACER: 0 simplificar esto con expl3
-\newcommand{\TipoDeArticulo}[1]{%
+\newcommand{\SeccionTOC}[1]{%
     \ifstrequal{#1}{divulgacion}{\IndiceDivulgacion}{%
         \ifstrequal{#1}{historia}{\IndiceHistoria}{%
             \ifstrequal{#1}{filosofia}{\IndiceFilosofia}{%
@@ -198,71 +198,83 @@
     }%
 }
 
-% :FACER: 0 ver que fai esto e seguramente simplificalo.
-\newcommand{\SioNo}[2]{%
-    \edef\cleanedinput{\unexpanded{#1}}%
-    \edef\cleanedinput{\expandafter\trimspaces\cleanedinput}%
-    \ifdefstring{\cleanedinput}{Si}{%
-        \TipoDeArticulo{#2}\\[2mm]%
-    }{%
-        \vspace{-5mm}
-    }%
-}
- % Hay que introducirle 4 cosas
- %#1 -> Nombre del artículo,
- %#2 -> NOmbre del autor del artículo,
- %#3 -> Si: queremos que empiece una sección en el indice
- %#4 -> Si #3=Si -> Crea una nueva sección en el índice
-\newcommand{\addchaptersummary}[4]{%
-    \phantomsection
+% Este macro pode invocarse con ou sen asterisco, ousexa \EngadeAoTOC* 
+% Co asterisco, aparte do titulo, tamén engade unha seccion ao TOC
+%
+% #1 (asterisco) crear unha seccion no TOC ou no
+% #2 -> Nome do artigo
+% #3 -> Nome do autor
+% #4 -> Estilo da páxina (TIPO de artigo)
+\NewDocumentCommand\EngadeAoTOC{smmm}{%
+    % Empezamos a engadir cousas. Primeiro, o titulo (#2) e dependendo do
+    % asterisco, engade unha seccion
     \addtocontents{toc}{%
-    \begingroup
-    \setlength{\parindent}{0pt}
-    \protect\SioNo{#3}{#4}
-    \endgroup}
-    \addcontentsline{toc}{section}{\protect{#1}} % Esta añadiendo el artículo al tableofcontentse
-    \addtocontents{toc}{
-        \begin{minipage}[t][.3cm][t]{9cm} % Definindo largura fixa para a minipage de texto com alinhamento superior
-            % Ajuste fino para alinhar o resumo do texto com o topo da figura (altere de acordo com o topo da figura)
-            %\protect {\scriptsize #2}
-            %\protect\vfill% Ajuste fino para alinhar o nome do autor do texto con el nombre del artículo
-            \protect{\small #2}
-            \protect\vfill% Ajuste fino para alinhar o nome do autor do texto com el resumen
-            \protect\vspace{1cm} % Ajuste fino para espaçamento entre figura e resumo e próximo artigo do sumário
-            \protect
+        \begingroup%
+            \setlength{\parindent}{0pt}%
+            % Primeiro, engadimos seccion ao TOC ou no? Depende de se o macro
+            % se usou cun asterisco ou no
+            \IfBooleanTF{#1}
+                {\SeccionTOC{#2}\\[2mm]}% ENGADIR SECCION
+                {\vspace{-5mm}}% NON ENGADIR SECCION
+        \endgroup%
+    }
+    % Engadimo o nome do artigo
+    \addcontentsline{toc}{section}{\protect{#2}}
+    % Engadimos o nome do aoutor. Pa que quede ben metese nunha minipage
+    \addtocontents{toc}{%
+        % Definindo largura fixa para a minipage de texto com alinhamento
+        % superior
+        \begin{minipage}[t][.3cm][t]{9cm}
+            % Ajuste fino para alinhar o resumo do texto com o topo da figura
+            % (altere de acordo com o topo da figura)
+            \protect{\small #3}%
+            % Ajuste fino para alinhar o nome do autor do texto com el resumen
+            \protect\vfill%
+            % Ajuste fino para espaçamento entre figura e resumo e próximo
+            % artigo do sumário
+            \protect\vspace{1cm}%
+            \protect%
         \end{minipage}\vfill}
     \addtocontents{toc}{\vspace{2em}}
 }
 
-% :FACER: 0 xunto cas cousas anteriores, simplificar esto
-% :FACER: facer o subtitulo opcional (con \NewDocumentCommand e \IfNoValueTF)
 % Un dos comandos máis importantes. Debe usarse ao comezo de cada artigo.
-\newcommand{\titular}[5]{%
-    % #1: nome do artigo,
-    % #2: nome do autor,
-    % #3: estilo da páxina, cambia os encabezados (e no futuro pode que mais
+\NewDocumentCommand\Titular{smmmm}{%
+    % #1: (asterisco). Poñelo engade seccion ao toc
+    % #2: nome do artigo,
+    % #3: nome do autor,
+    % #4: estilo da páxina, cambia os encabezados (e no futuro pode que mais
     %     cousas) A escoller entre:
     %     divulgacion,historia,actualidadeFacultade,actualidadeCientifica,
     %     filosofia,entrevistas,programacion,pasatempos,anuncios,profesorado
-    % #4: subtítulo do artigoprofesorado
-    % #5: es el #3 del índice, véase arriba \addchaptersummary
-    \pagestyle{#3}
-    \addchaptersummary{#1}{#2}{#5}{#3} % Aqui introducimos lo que se va a colocar en el indice, véase arriba el significado
+    % #5: subtítulo
+    %
+    \phantomsection%
+    % Primeiro mostramos o propio titular, como sempre
     \begin{center}
         \vspace*{-1cm}
-        % Esto es para que cuanddo el texto ocupe más de dos líneas, se amplie
+        % Esto es para que cuando el texto ocupe más de dos líneas, se amplie
         \begingroup
-        \setstretch{2}
-        \noindent{\color{Resalte}\Huge \textbf{#1}} \\
+            \setstretch{2}%
+            \noindent{\color{Resalte}\Huge \textbf{#2}} \\ % TITULO
         \endgroup
-        %
         \vspace{3mm}
-        {\Large #2} \\
+        {\Large #3} \\ % AUTOR
         \vspace{3mm}
-        \textit{#4}
+        \textit{#5}  % SUBTITULO
         \vspace{3mm}
     \end{center}
-    % aprobeito pa meter esto aquí. Resetea números nas ecuacións e figuras
+    % Comprobamos se o comando \Titular se usou con un asterisco ou no
+    \IfBooleanTF{#1}
+        {% no caso de ter o asterisco, engadimos unha seccion ao TOC.
+            \EngadeAoTOC*{#2}{#3}{#4}%
+        }%
+        {% se non temos asterisco, non engadimos seccion
+            \EngadeAoTOC{#2}{#3}{#4}%
+        }
+    \pagestyle{#4}%
+    % significado aprobeito pa meter esto aquí. Resetea números nas ecuacións e
+    % figuras
     \setcounter{equation}{0}
     \setcounter{figure}{0}
 }
@@ -290,10 +302,6 @@
 % Pa facilitar a creacion cun par de comandos
 \RequirePackage{fancyhdr}
 
-% ESTILOS DE PÁXINA.
-% Estos estilos cambian os encabezados das páxinas dependendo dos artigos que
-% haxa.
-
 % O comando pa xerar o logo onde sexa, pode usarse con \fontsize
 \newcommand{\LogoM}{
     \begin{tikzpicture}
@@ -309,27 +317,7 @@
         at (00.05,-0.05)
         {$\overrightarrow{m}$};
     \end{tikzpicture}
-
 }
-
-% :FACER: 0 case seguro que este se pode borrar
-\newcommand{\Logodos}{
-    \begin{tikzpicture}
-        \node[
-            shape     = circle,
-            draw      = black,
-            fill      = Resalte,
-            text      = TextoEnResalte,
-            inner sep = 0pt,
-            radius    = 0.5,
-            inner sep = 1pt,
-        ]
-        at (00.05,-0.05)
-        {$\overrightarrow{m}$};
-    \end{tikzpicture}
-}
-
-
 
 % esto e pa poñer o logo do momento no encabezado
 \renewcommand\headrule{
@@ -342,6 +330,9 @@
 
 % :FACER: 0 esto pode acortarse con arrays, e deberíase xuntar toda a
 % funcionalidade de encabezados e titulos e así
+% ESTILOS DE PÁXINA.
+% Estos estilos cambian os encabezados das páxinas dependendo dos artigos que
+% haxa.
 
 % artigos de DIVULGACION
 \fancypagestyle{divulgacion}{

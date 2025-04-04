@@ -1,4 +1,3 @@
-
 % Color del resalte trasparentado a la derecha del índice
 \begin{tikzpicture}[remember picture, overlay]
     \draw[
@@ -8,27 +7,27 @@
 \end{tikzpicture}
 
 % Columna de la izqueirda, está el índice y el Sobre Momentum:
-\begin{minipage}[t]{0.72\textwidth}
-    \vspace{-0.3cm}
-    \begin{minipage}[t]{\hsize}
-        \makebox[0pt][l]{
+\begin{minipage}[t]{0.72\textwidth}%
+    \vspace{-0.3cm}%
+    \begin{minipage}[t]{\hsize}%
+        \makebox[0pt][l]{%
             % Aquí incluimos el tableofcontens,
             \begin{adjustbox}{valign=t,minipage={0.9\textwidth},margin={0pt,0pt}}
                 {   % Indice personalizable, con tamaño, color, fuente...
                     \section*{\Huge \textbf{Índice}}
-                    \begingroup
+                    \begingroup%
                     % Esto es para que no salte el Indice default, y lo podamos poner nosotros
-                    \let\contentsname\relax
-                    \tableofcontents
-                    \endgroup
+                        \let\contentsname\relax%
+                        \tableofcontents%
+                    \endgroup%
                 }%
             \end{adjustbox}%
         }%
         % Texto debajo del índice, sobre momentum
-        \vfill
-        \begin{minipage}[t]{0.9\textwidth}
-            \vfill
-            \vspace{2cm}
+        \vfill%
+        \begin{minipage}[t]{0.9\textwidth}%
+            \vfill%
+            \vspace{2cm}%
             {\Huge \color{Resalte!75!black} \textbf{Sobre Momentum}:}
             \\[1cm]
             Tras uns cuantos meses de traballo, por fín podemos dar saída á nova
@@ -45,9 +44,9 @@
     \end{minipage}
 \end{minipage}
 \hfill
-
+%
 % Texto que está en la linea roja trasparente, logos y autores/editores/directores
-
+%
 % :FACER: 0 usar color de Texto en Resalte
 % :FACER: 0 numero da revista usando macro
 \begin{minipage}[t]{0.28\textwidth}
@@ -65,8 +64,8 @@
         \begingroup
             \hypersetup{urlcolor=white}
             \node[
-                anchor=west,
-                align=left
+                anchor = west,
+                align  = left
             ] at (0.5,0)
             {
                 \textbf{\textcolor{white}{\href{https://github.com/DAF-USC/revista}{GitHub}}}
