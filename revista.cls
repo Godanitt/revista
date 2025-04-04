@@ -97,7 +97,7 @@
 % E xa que falamos de depuración, está o comando este pa mostrar todos os
 % paquetes que se usan (implícita e explícitamente) e súas versións. Toda esa
 % info gárdase no *.log, de cara ao final logo dunha liña que pon *File List*
-\listfiles
+% \listfiles
 
 % :FACER: como usar duas columnas?
 % Por agora usamos a opcion 'twocolumn' da clase 'article'. Eventualmente
@@ -142,142 +142,6 @@
 \RequirePackage{adjustbox}  % Para ajustar tablas
 \RequirePackage{etoolbox}   % Para hacer condicionales
 \RequirePackage{trimspaces}
-
-
-% :FACER: 0 simplificar esto todo. Tal vez colocar as cadeas en arrays.
-% comandos que crean as liñas de separacion para organizar por temáticas o
-% indice
-\newcommand{\IndiceDivulgacion}{
-    \begin{tikzpicture}
-        \draw[thick] (0,0) -- (4,0);
-        \node[anchor=center] at (5.5,0)  {\textbf{Divulgacion}};
-        \draw[thick] (7,0) -- (11,0);
-    \end{tikzpicture}
-}
-\newcommand{\IndiceFilosofia}{
-    \begin{tikzpicture}
-        \draw[thick] (0,0) -- (4,0);
-        \node[anchor=center] at (5.5,0) {\textbf{Filosofía}};
-        \draw[thick] (7,0) -- (11,0);
-    \end{tikzpicture}
-}
-\newcommand{\IndiceHistoria}{
-    \begin{tikzpicture}
-        \draw[thick] (0,0) -- (4,0);
-        \node[anchor=center] at (5.5,0) {\textbf{Historia}};
-        \draw[thick] (7,0) -- (11,0);
-    \end{tikzpicture}
-}
-\newcommand{\IndiceProfesorado}{
-    \begin{tikzpicture}
-        \draw[thick] (0,0) -- (2.9,0);
-        \node[anchor=center] at (5.5,0) {\textbf{Recuncho do Profesorado}};
-        \draw[thick] (8.1,0) -- (11,0);
-    \end{tikzpicture}
-}
-\newcommand{\IndiceEntrevistas}{
-    \begin{tikzpicture}
-        \draw[thick] (0,0) -- (4,0);
-        \node[anchor=center] at (5.5,0)  {\textbf{Entrevistas}};
-        \draw[thick] (7,0) -- (11,0);
-    \end{tikzpicture}
-}
-
-% :FACER: 0 simplificar esto con expl3
-\newcommand{\SeccionTOC}[1]{%
-    \ifstrequal{#1}{divulgacion}{\IndiceDivulgacion}{%
-        \ifstrequal{#1}{historia}{\IndiceHistoria}{%
-            \ifstrequal{#1}{filosofia}{\IndiceFilosofia}{%
-                \ifstrequal{#1}{profesorado}{\IndiceProfesorado}{%
-                    \ifstrequal{#1}{entrevistas}{\IndiceEntrevistas}{%
-                        \IndiceEntrevistas
-                    }%
-                }%
-            }%
-        }%
-    }%
-}
-
-% Este macro pode invocarse con ou sen asterisco, ousexa \EngadeAoTOC* 
-% Co asterisco, aparte do titulo, tamén engade unha seccion ao TOC
-%
-% #1 (asterisco) crear unha seccion no TOC ou no
-% #2 -> Nome do artigo
-% #3 -> Nome do autor
-% #4 -> Estilo da páxina (TIPO de artigo)
-\NewDocumentCommand\EngadeAoTOC{smmm}{%
-    % Empezamos a engadir cousas. Primeiro, o titulo (#2) e dependendo do
-    % asterisco, engade unha seccion
-    \addtocontents{toc}{%
-        \begingroup%
-            \setlength{\parindent}{0pt}%
-            % Primeiro, engadimos seccion ao TOC ou no? Depende de se o macro
-            % se usou cun asterisco ou no
-            \IfBooleanTF{#1}
-                {\SeccionTOC{#2}\\[2mm]}% ENGADIR SECCION
-                {\vspace{-5mm}}% NON ENGADIR SECCION
-        \endgroup%
-    }
-    % Engadimo o nome do artigo
-    \addcontentsline{toc}{section}{\protect{#2}}
-    % Engadimos o nome do aoutor. Pa que quede ben metese nunha minipage
-    \addtocontents{toc}{%
-        % Definindo largura fixa para a minipage de texto com alinhamento
-        % superior
-        \begin{minipage}[t][.3cm][t]{9cm}
-            % Ajuste fino para alinhar o resumo do texto com o topo da figura
-            % (altere de acordo com o topo da figura)
-            \protect{\small #3}%
-            % Ajuste fino para alinhar o nome do autor do texto com el resumen
-            \protect\vfill%
-            % Ajuste fino para espaçamento entre figura e resumo e próximo
-            % artigo do sumário
-            \protect\vspace{1cm}%
-            \protect%
-        \end{minipage}\vfill}
-    \addtocontents{toc}{\vspace{2em}}
-}
-
-% Un dos comandos máis importantes. Debe usarse ao comezo de cada artigo.
-\NewDocumentCommand\Titular{smmmm}{%
-    % #1: (asterisco). Poñelo engade seccion ao toc
-    % #2: nome do artigo,
-    % #3: nome do autor,
-    % #4: estilo da páxina, cambia os encabezados (e no futuro pode que mais
-    %     cousas) A escoller entre:
-    %     divulgacion,historia,actualidadeFacultade,actualidadeCientifica,
-    %     filosofia,entrevistas,programacion,pasatempos,anuncios,profesorado
-    % #5: subtítulo
-    %
-    \phantomsection%
-    % Primeiro mostramos o propio titular, como sempre
-    \begin{center}
-        \vspace*{-1cm}
-        % Esto es para que cuando el texto ocupe más de dos líneas, se amplie
-        \begingroup
-            \setstretch{2}%
-            \noindent{\color{Resalte}\Huge \textbf{#2}} \\ % TITULO
-        \endgroup
-        \vspace{3mm}
-        {\Large #3} \\ % AUTOR
-        \vspace{3mm}
-        \textit{#5}  % SUBTITULO
-        \vspace{3mm}
-    \end{center}
-    % Comprobamos se o comando \Titular se usou con un asterisco ou no
-    \IfBooleanTF{#1}
-        {% no caso de ter o asterisco, engadimos unha seccion ao TOC.
-            \EngadeAoTOC*{#2}{#3}{#4}%
-        }%
-        {% se non temos asterisco, non engadimos seccion
-            \EngadeAoTOC{#2}{#3}{#4}%
-        }
-    \pagestyle{#4}%
-    % significado aprobeito pa meter esto aquí. Resetea números nas ecuacións e
-    % figuras
-    \setcounter{equation}{0}
-    \setcounter{figure}{0}
-}
 
 % Esto pa cambiar facilmente o estilo das 'captions' das cousas. Queremos que este justificada
 % singlelinecheck=false: evita que LaTeX centre pies de una sola línea (por defecto, lo hace aunque hayas pedido justificación).
@@ -442,6 +306,141 @@
     \fancyfoot[LO,RE]{\imprimeTitulo}
     \renewcommand{\footrulewidth}{0pt}
     \headsep = 1.5cm
+}
+
+% :FACER: 0 simplificar esto todo. Tal vez colocar as cadeas en arrays.
+% comandos que crean as liñas de separacion para organizar por temáticas o
+% indice
+\newcommand{\IndiceDivulgacion}{
+    \begin{tikzpicture}
+        \draw[thick] (0,0) -- (4,0);
+        \node[anchor=center] at (5.5,0)  {\textbf{Divulgacion}};
+        \draw[thick] (7,0) -- (11,0);
+    \end{tikzpicture}
+}
+\newcommand{\IndiceFilosofia}{
+    \begin{tikzpicture}
+        \draw[thick] (0,0) -- (4,0);
+        \node[anchor=center] at (5.5,0) {\textbf{Filosofía}};
+        \draw[thick] (7,0) -- (11,0);
+    \end{tikzpicture}
+}
+\newcommand{\IndiceHistoria}{
+    \begin{tikzpicture}
+        \draw[thick] (0,0) -- (4,0);
+        \node[anchor=center] at (5.5,0) {\textbf{Historia}};
+        \draw[thick] (7,0) -- (11,0);
+    \end{tikzpicture}
+}
+\newcommand{\IndiceProfesorado}{
+    \begin{tikzpicture}
+        \draw[thick] (0,0) -- (2.9,0);
+        \node[anchor=center] at (5.5,0) {\textbf{Recuncho do Profesorado}};
+        \draw[thick] (8.1,0) -- (11,0);
+    \end{tikzpicture}
+}
+\newcommand{\IndiceEntrevistas}{
+    \begin{tikzpicture}
+        \draw[thick] (0,0) -- (4,0);
+        \node[anchor=center] at (5.5,0)  {\textbf{Entrevistas}};
+        \draw[thick] (7,0) -- (11,0);
+    \end{tikzpicture}
+}
+
+% :FACER: 0 simplificar esto con expl3
+\newcommand{\SeccionTOC}[1]{%
+    \ifstrequal{#1}{divulgacion}{\IndiceDivulgacion}{%
+        \ifstrequal{#1}{historia}{\IndiceHistoria}{%
+            \ifstrequal{#1}{filosofia}{\IndiceFilosofia}{%
+                \ifstrequal{#1}{profesorado}{\IndiceProfesorado}{%
+                    \ifstrequal{#1}{entrevistas}{\IndiceEntrevistas}{%
+                        \IndiceEntrevistas
+                    }%
+                }%
+            }%
+        }%
+    }%
+}
+
+% Este macro pode invocarse con ou sen asterisco, ousexa \EngadeAoTOC*
+% Co asterisco, aparte do titulo, tamén engade unha seccion ao TOC
+%
+% #1 (asterisco) crear unha seccion no TOC ou no
+% #2 -> Nome do artigo
+% #3 -> Nome do autor
+% #4 -> Estilo da páxina (TIPO de artigo)
+\NewDocumentCommand\EngadeAoTOC{smmm}{%
+    % Empezamos a engadir cousas. Primeiro, o titulo (#2) e dependendo do
+    % asterisco, engade unha seccion
+    \addtocontents{toc}{%
+        \begingroup%
+            \setlength{\parindent}{0pt}%
+            % Primeiro, engadimos seccion ao TOC ou no? Depende de se o macro
+            % se usou cun asterisco ou no
+            \IfBooleanTF{#1}
+                {\SeccionTOC{#2}\\[2mm]}% ENGADIR SECCION
+                {\vspace{-5mm}}% NON ENGADIR SECCION
+        \endgroup%
+    }
+    % Engadimo o nome do artigo
+    \addcontentsline{toc}{section}{\protect{#2}}
+    % Engadimos o nome do autor. Pa que quede ben metese nunha minipage
+    \addtocontents{toc}{%
+        % Definindo largura fixa para a minipage de texto com alinhamento
+        % superior
+        \begin{minipage}[t][.3cm][t]{9cm}
+            % Ajuste fino para alinhar o resumo do texto com o topo da figura
+            % (altere de acordo com o topo da figura)
+            \protect{\small #3}%
+            % Ajuste fino para alinhar o nome do autor do texto com el resumen
+            \protect\vfill%
+            % Ajuste fino para espaçamento entre figura e resumo e próximo
+            % artigo do sumário
+            \protect\vspace{1cm}%
+            \protect%
+        \end{minipage}\vfill}
+    \addtocontents{toc}{\vspace{2em}}
+}
+
+% Un dos comandos máis importantes. Debe usarse ao comezo de cada artigo.
+\NewDocumentCommand\Titular{smmmm}{%
+    % #1: (asterisco). Poñelo engade seccion ao toc
+    % #2: nome do artigo,
+    % #3: nome do autor,
+    % #4: estilo da páxina, cambia os encabezados (e no futuro pode que mais
+    %     cousas) A escoller entre:
+    %     divulgacion,historia,actualidadeFacultade,actualidadeCientifica,
+    %     filosofia,entrevistas,programacion,pasatempos,anuncios,profesorado
+    % #5: subtítulo
+    %
+    \phantomsection%
+    % Primeiro mostramos o propio titular, como sempre
+    \begin{center}
+        \vspace*{-1cm}
+        % Esto es para que cuando el texto ocupe más de dos líneas, se amplie
+        \begingroup
+            \setstretch{2}%
+            \noindent{\color{Resalte}\Huge \textbf{#2}} \\ % TITULO
+        \endgroup
+        \vspace{3mm}
+        {\Large #3} \\ % AUTOR
+        \vspace{3mm}
+        \textit{#5}  % SUBTITULO
+        \vspace{3mm}
+    \end{center}
+    % Comprobamos se o comando \Titular se usou con un asterisco ou no
+    \IfBooleanTF{#1}
+        {% no caso de ter o asterisco, engadimos unha seccion ao TOC.
+            \EngadeAoTOC*{#2}{#3}{#4}%
+        }%
+        {% se non temos asterisco, non engadimos seccion
+            \EngadeAoTOC{#2}{#3}{#4}%
+        }
+    \pagestyle{#4}%
+    % significado aprobeito pa meter esto aquí. Resetea números nas ecuacións e
+    % figuras
+    \setcounter{equation}{0}
+    \setcounter{figure}{0}
 }
 
 % Tipografia preciosa. Xoga cos espaciados moi ben para xustificar o texto.
