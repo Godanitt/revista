@@ -202,9 +202,9 @@
 \fancypagestyle{divulgacion}{
     \fancyhf{}
     \renewcommand{\headrulewidth}{0.4pt}
-    \fancyhead[RE,LO]{DIVULGACIÓN}
+    \fancyhead[LE,RO]{DIVULGACIÓN}
     \fancyfoot[LE,RO]{\thepage}
-    \fancyfoot[RE,LO]{\imprimeTitulo}
+    \fancyfoot[LO,RE]{\imprimeTitulo}
     \renewcommand{\footrulewidth}{0pt}
     \headsep = 1.5cm
 }
@@ -213,9 +213,9 @@
 \fancypagestyle{historia}{
     \fancyhf{}
     \renewcommand{\headrulewidth}{0.4pt}
-    \fancyhead[RE,LO]{HISTORIA}
+    \fancyhead[LE,RO]{HISTORIA}
     \fancyfoot[LE,RO]{\thepage}
-    \fancyfoot[RE,LO]{\imprimeTitulo}
+    \fancyfoot[LO,RE]{\imprimeTitulo}
     \renewcommand{\footrulewidth}{0pt}
     \headsep = 1.5cm
 }
@@ -224,9 +224,9 @@
 \fancypagestyle{actualidadeFacultade}{
     \fancyhf{}
     \renewcommand{\headrulewidth}{0.4pt}
-    \fancyhead[RE,LO]{ACTUALIDADE DA FACULTADE}
+    \fancyhead[LE,RO]{ACTUALIDADE DA FACULTADE}
     \fancyfoot[LE,RO]{\thepage}
-    \fancyfoot[RE,LO]{\imprimeTitulo}
+    \fancyfoot[LO,RE]{\imprimeTitulo}
     \renewcommand{\footrulewidth}{0pt}
     \headsep = 1.5cm
 }
@@ -235,9 +235,9 @@
 \fancypagestyle{actualidadeCientifica}{
     \fancyhf{}
     \renewcommand{\headrulewidth}{0.4pt}
-    \fancyhead[RE,LO]{ACTUALIDADE CIENTÍFICA}
+    \fancyhead[LE,RO]{ACTUALIDADE CIENTÍFICA}
     \fancyfoot[LE,RO]{\thepage}
-    \fancyfoot[RE,LO]{\imprimeTitulo}
+    \fancyfoot[LO,RE]{\imprimeTitulo}
     \renewcommand{\footrulewidth}{0pt}
     \headsep = 1.5cm
 }
@@ -246,9 +246,9 @@
 \fancypagestyle{filosofia}{
     \fancyhf{}
     \renewcommand{\headrulewidth}{0.4pt}
-    \fancyhead[RE,LO]{FILOSOFÍA}
+    \fancyhead[LE,RO]{FILOSOFÍA}
     \fancyfoot[LE,RO]{\thepage}
-    \fancyfoot[RE,LO]{\imprimeTitulo}
+    \fancyfoot[LO,RE]{\imprimeTitulo}
     \renewcommand{\footrulewidth}{0pt}
     \headsep = 1.5cm
 }
@@ -257,9 +257,9 @@
 \fancypagestyle{entrevistas}{
     \fancyhf{}
     \renewcommand{\headrulewidth}{0.4pt}
-    \fancyhead[RE,LO]{ENTREVISTAS}
+    \fancyhead[LE,RO]{ENTREVISTAS}
     \fancyfoot[LE,RO]{\thepage}
-    \fancyfoot[RE,LO]{\imprimeTitulo}
+    \fancyfoot[LO,RE]{\imprimeTitulo}
     \renewcommand{\footrulewidth}{0pt}
     \headsep = 1.5cm
 }
@@ -268,9 +268,9 @@
 \fancypagestyle{programacion}{
     \fancyhf{}
     \renewcommand{\headrulewidth}{0.4pt}
-    \fancyhead[RE,LO]{PROGRAMACIÓN}
+    \fancyhead[LE,RO]{PROGRAMACIÓN}
     \fancyfoot[LE,RO]{\thepage}
-    \fancyfoot[RE,LO]{\imprimeTitulo}
+    \fancyfoot[LO,RE]{\imprimeTitulo}
     \renewcommand{\footrulewidth}{0pt}
     \headsep = 1.5cm
 }
@@ -279,9 +279,9 @@
 \fancypagestyle{pasatempos}{
     \fancyhf{}
     \renewcommand{\headrulewidth}{0.4pt}
-    \fancyhead[RE,LO]{PASATEMPOS}
+    \fancyhead[LE,RO]{PASATEMPOS}
     \fancyfoot[LE,RO]{\thepage}
-    \fancyfoot[RE,LO]{\imprimeTitulo}
+    \fancyfoot[LO,RE]{\imprimeTitulo}
     \renewcommand{\footrulewidth}{0pt}
     \headsep = 1.5cm
 }
@@ -290,9 +290,9 @@
 \fancypagestyle{anuncios}{
     \fancyhf{}
     \renewcommand{\headrulewidth}{0.4pt}
-    \fancyhead[RE,LO]{ANUNCIOS}
+    \fancyhead[LE,RO]{ANUNCIOS}
     \fancyfoot[LE,RO]{\thepage}
-    \fancyfoot[RE,LO]{\imprimeTitulo}
+    \fancyfoot[LO,RE]{\imprimeTitulo}
     \renewcommand{\footrulewidth}{0pt}
     \headsep = 1.5cm
 }
@@ -301,9 +301,9 @@
 \fancypagestyle{profesorado}{
     \fancyhf{}
     \renewcommand{\headrulewidth}{0.4pt}
-    \fancyhead[RE,LO]{RECUNCHO DO PROFESORADO}
+    \fancyhead[LE,RO]{RECUNCHO DO PROFESORADO}
     \fancyfoot[LE,RO]{\thepage}
-    \fancyfoot[RE,LO]{\imprimeTitulo}
+    \fancyfoot[LO,RE]{\imprimeTitulo}
     \renewcommand{\footrulewidth}{0pt}
     \headsep = 1.5cm
 }
@@ -369,7 +369,6 @@
 % #2 -> Nome do artigo
 % #3 -> Nome do autor
 % #4 -> Estilo da páxina (TIPO de artigo)
-
 \NewDocumentCommand\EngadeAoTOC{ s m m m }{%
     % Primeiro, engadimos seccion ao TOC ou no? Depende de se o macro
     % se usou cun asterisco ou no
@@ -378,7 +377,7 @@
         \addtocontents{toc}{%
             \begingroup%
                 \setlength{\parindent}{0pt}%
-                \protect\SeccionTOC{profesorado}%
+                \protect\SeccionTOC{#4}%
             \endgroup%
         }%
     }%
@@ -387,14 +386,14 @@
             \begingroup%
                 \setlength{\parindent}{0pt}%
                 \vspace{-5mm}%
-            \endgroup.%
+            \endgroup%
         }
     }
 
     % Engadimos o nome do artigo
-    % \addcontentsline{toc}{section*}{\\\protect{#2}}
-    % O ERRO DE COMPILACION ESTÁ AQUI
+    % vvvvvvvvvvvvvvv O ERRO DE COMPILACION ESTÁ AQUI vvvvvvvvvvvvvvvvvvvvv
     \addcontentsline{toc}{section}{\protect{#2}}
+    % ^^^^^^^^^^^^^^^ O ERRO DE COMPILACION ESTÁ AQUI ^^^^^^^^^^^^^^^^^^^^^
 
     % Engadimos o nome do autor. Pa que quede ben metese nunha minipage
     \addtocontents{toc}{%
@@ -445,11 +444,9 @@
     % Comprobamos se o comando \Titular se usou con un asterisco ou no
     \IfBooleanTF{#1}%
         {% no caso de ter o asterisco, engadimos unha seccion ao TOC.
-            ESTASE ENGADINDO AO TOC #2 #3 #4 \vspace{2em}
             \EngadeAoTOC*{#2}{#3}{#4}%
         }%
         {% se non temos asterisco, non engadimos seccion
-            NON SE ENGADE AO TOC #2 #3 #4 \vspace{2em}
             \EngadeAoTOC{#2}{#3}{#4}%
         }
     \pagestyle{#4}%
@@ -495,6 +492,10 @@
 % \def\TerceiroArtigo#1{\def\@TerceiroArtigo{#1}}
 % \newcommand{\imprimeTerceiroArtigo}{\@TerceiroArtigo}
 
+% O texto que aparece na imaxe da portada
+\def\ComentarioImaxePortada#1{\def\@ComentarioImaxePortada{#1}}
+\newcommand{\imprimeComentarioImaxePortada}{\@ComentarioImaxePortada}
+
 % TITULO REVISTA
 \newcommand{\imprimeTitulo}{MOMENTUM}
 \newcommand{\FormateaTitulo}[1]{%
@@ -504,7 +505,11 @@
 % RUTA PARA A IMAXE DA PORTADA
 \def\ImaxePortada#1{\def\@ImaxePortada{#1}}
 \newcommand{\imprimeImaxePortada}{\@ImaxePortada}
-\setlength{\headheight}{20pt}
+\setlength{\headheight}{20pt} % :FACER: POR QUÉ ESTÁ ISTO AQUÍ??????
+
+% PARTICIPANTES DO PROXECTO. Usase no índice, no lado dereito ca cor de resalte
+\def\Participantes#1{\def\@Participantes{#1}}
+\newcommand{\imprimeParticipantes}{\textcolor{TextoEnResalte}{\@Participantes}}
 
 \makeatother
 % Todos esos comandos teñen a info da revista. Gardase o valor nunha variable,
@@ -519,6 +524,8 @@
 % \ImaxePortada{./cern.png}
 % \definecolor{Resalte}{HTML}{ff0000}
 % \definecolor{TextoEnResalte}{HTML}{000000}
+% \ComentarioImaxePortada{ A imaxe da portada e moi bonita}
+% \Participantes{ Rocio, \\ Arturo }%
 
 % Os comandos anteriores definen as variables. Pa mostralas no pdf hai que usar:
 %
@@ -532,7 +539,7 @@
 % \color{Resalte}         Para colorear cousas ca cor específica de cada revista
 
 % :FACER: remirar estos conteos...
-\pagenumbering{arabic}\setcounter{page}{1}
+% \pagenumbering{arabic}\setcounter{page}{1}
 
 
 % outros macros e definicions %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
