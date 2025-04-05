@@ -322,9 +322,9 @@
 \fancypagestyle{divulgacion}{
     \fancyhf{}
     \renewcommand{\headrulewidth}{0.4pt}
-    \fancyhead[RE,LO]{DIVULGACIÓN}
+    \fancyhead[LE,RO]{DIVULGACIÓN}
     \fancyfoot[LE,RO]{\thepage}
-    \fancyfoot[RE,LO]{\imprimeTitulo}
+    \fancyfoot[LO,RE]{\imprimeTitulo}
     \renewcommand{\footrulewidth}{0pt}
     \headsep = 1.5cm
     
@@ -334,9 +334,9 @@
 \fancypagestyle{historia}{
     \fancyhf{}
     \renewcommand{\headrulewidth}{0.4pt}
-    \fancyhead[RE,LO]{HISTORIA}
+    \fancyhead[LE,RO]{HISTORIA}
     \fancyfoot[LE,RO]{\thepage}
-    \fancyfoot[RE,LO]{\imprimeTitulo}
+    \fancyfoot[LO,RE]{\imprimeTitulo}
     \renewcommand{\footrulewidth}{0pt}
     \headsep = 1.5cm
 }
@@ -345,9 +345,9 @@
 \fancypagestyle{actualidadeFacultade}{
     \fancyhf{}
     \renewcommand{\headrulewidth}{0.4pt}
-    \fancyhead[RE,LO]{ACTUALIDADE DA FACULTADE}
+    \fancyhead[LE,RO]{ACTUALIDADE DA FACULTADE}
     \fancyfoot[LE,RO]{\thepage}
-    \fancyfoot[RE,LO]{\imprimeTitulo}
+    \fancyfoot[LO,RE]{\imprimeTitulo}
     \renewcommand{\footrulewidth}{0pt}
     \headsep = 1.5cm
 }
@@ -356,9 +356,9 @@
 \fancypagestyle{actualidadeCientifica}{
     \fancyhf{}
     \renewcommand{\headrulewidth}{0.4pt}
-    \fancyhead[RE,LO]{ACTUALIDADE CIENTÍFICA}
+    \fancyhead[LE,RO]{ACTUALIDADE CIENTÍFICA}
     \fancyfoot[LE,RO]{\thepage}
-    \fancyfoot[RE,LO]{\imprimeTitulo}
+    \fancyfoot[LO,RE]{\imprimeTitulo}
     \renewcommand{\footrulewidth}{0pt}
     \headsep = 1.5cm
 
@@ -368,9 +368,9 @@
 \fancypagestyle{filosofia}{
     \fancyhf{}
     \renewcommand{\headrulewidth}{0.4pt}
-    \fancyhead[RE,LO]{FILOSOFÍA}
+    \fancyhead[LE,RO]{FILOSOFÍA}
     \fancyfoot[LE,RO]{\thepage}
-    \fancyfoot[RE,LO]{\imprimeTitulo}
+    \fancyfoot[LO,RE]{\imprimeTitulo}
     \renewcommand{\footrulewidth}{0pt}
     \headsep = 1.5cm
 }
@@ -379,9 +379,9 @@
 \fancypagestyle{entrevistas}{
     \fancyhf{}
     \renewcommand{\headrulewidth}{0.4pt}
-    \fancyhead[RE,LO]{ENTREVISTAS}
+    \fancyhead[LE,RO]{ENTREVISTAS}
     \fancyfoot[LE,RO]{\thepage}
-    \fancyfoot[RE,LO]{\imprimeTitulo}
+    \fancyfoot[LO,RE]{\imprimeTitulo}
     \renewcommand{\footrulewidth}{0pt}
     \headsep = 1.5cm
 }
@@ -390,9 +390,9 @@
 \fancypagestyle{programacion}{
     \fancyhf{}
     \renewcommand{\headrulewidth}{0.4pt}
-    \fancyhead[RE,LO]{PROGRAMACIÓN}
+    \fancyhead[LE,RO]{PROGRAMACIÓN}
     \fancyfoot[LE,RO]{\thepage}
-    \fancyfoot[RE,LO]{\imprimeTitulo}
+    \fancyfoot[LO,RE]{\imprimeTitulo}
     \renewcommand{\footrulewidth}{0pt}
     \headsep = 1.5cm
 }
@@ -401,9 +401,9 @@
 \fancypagestyle{pasatempos}{
     \fancyhf{}
     \renewcommand{\headrulewidth}{0.4pt}
-    \fancyhead[RE,LO]{PASATEMPOS}
+    \fancyhead[LE,RO]{PASATEMPOS}
     \fancyfoot[LE,RO]{\thepage}
-    \fancyfoot[RE,LO]{\imprimeTitulo}
+    \fancyfoot[LO,RE]{\imprimeTitulo}
     \renewcommand{\footrulewidth}{0pt}
 
     \headsep = 1.5cm}
@@ -412,9 +412,9 @@
 \fancypagestyle{anuncios}{
     \fancyhf{}
     \renewcommand{\headrulewidth}{0.4pt}
-    \fancyhead[RE,LO]{ANUNCIOS}
+    \fancyhead[LE,RO]{ANUNCIOS}
     \fancyfoot[LE,RO]{\thepage}
-    \fancyfoot[RE,LO]{\imprimeTitulo}
+    \fancyfoot[LO,RE]{\imprimeTitulo}
     \renewcommand{\footrulewidth}{0pt}
     \headsep = 1.5cm
 }
@@ -423,9 +423,9 @@
 \fancypagestyle{profesorado}{
     \fancyhf{}
     \renewcommand{\headrulewidth}{0.4pt}
-    \fancyhead[RE,LO]{RECUNCHO DO PROFESORADO}
+    \fancyhead[LE,RO]{RECUNCHO DO PROFESORADO}
     \fancyfoot[LE,RO]{\thepage}
-    \fancyfoot[RE,LO]{\imprimeTitulo}
+    \fancyfoot[LO,RE]{\imprimeTitulo}
     \renewcommand{\footrulewidth}{0pt}
     \headsep = 1.5cm
 }
@@ -503,7 +503,7 @@
 % \color{Resalte}         Para colorear cousas ca cor específica de cada revista
 
 % :FACER: remirar estos conteos...
-\pagenumbering{arabic}\setcounter{page}{1}
+%\pagenumbering{arabic}\setcounter{page}{1}
 
 
 % outros macros e definicions %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
