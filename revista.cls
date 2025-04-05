@@ -369,42 +369,51 @@
 % #2 -> Nome do artigo
 % #3 -> Nome do autor
 % #4 -> Estilo da páxina (TIPO de artigo)
+
 \NewDocumentCommand\EngadeAoTOC{ s m m m }{%
-    % Empezamos a engadir cousas. Primeiro, o titulo (#2) e dependendo do
-    % asterisco, engade unha seccion
-    \addtocontents{toc}{%
-        {% \begingroup%
-            \setlength{\parindent}{0pt}%
-            % Primeiro, engadimos seccion ao TOC ou no? Depende de se o macro
-            % se usou cun asterisco ou no
-            \IfBooleanTF{#1}%
-                % {BOASSSSSSSSSSSSSSSSSSSSSSSSSSSSs #1 #2 #3 #4}
-                % {BOASSSSSSSSSSSSSSSSSSSSSSSSSSSSs}%
-                {\SeccionTOC{profesorado} \vspace*{2mm}}% ENGADIR SECCION
-                % {\SeccionTOC{#4}\\[2mm]}% ENGADIR SECCION
-                {\vspace{-5mm}}% NON ENGADIR SECCION
-        }% \endgroup%
+    % Primeiro, engadimos seccion ao TOC ou no? Depende de se o macro
+    % se usou cun asterisco ou no
+    \IfBooleanTF{#1}%
+    {% No caso de usar asterisco, angadir unha seccion ao TOC
+        \addtocontents{toc}{%
+            \begingroup%
+                \setlength{\parindent}{0pt}%
+                \protect\SeccionTOC{profesorado}%
+            \endgroup%
+        }%
+    }%
+    {% No caso de non telo, non engadir seccion ao toc
+        \addtocontents{toc}{%
+            \begingroup%
+                \setlength{\parindent}{0pt}%
+                \vspace{-5mm}%
+            \endgroup.%
+        }
     }
+
     % Engadimos o nome do artigo
-    % \addcontentsline{toc}{section}{\protect{#2}}
+    % \addcontentsline{toc}{section*}{\\\protect{#2}}
+    % O ERRO DE COMPILACION ESTÁ AQUI
+    \addcontentsline{toc}{section}{\protect{#2}}
+
     % Engadimos o nome do autor. Pa que quede ben metese nunha minipage
-    % \addtocontents{toc}{%
-    %     % Definindo largura fixa para a minipage de texto com alinhamento
-    %     % superior
-    %     \begin{minipage}[t][.3cm][t]{9cm}
-    %         % Ajuste fino para alinhar o resumo do texto com o topo da figura
-    %         % (altere de acordo com o topo da figura)
-    %         \protect{\small #3}%
-    %         % Ajuste fino para alinhar o nome do autor do texto com el resumen
-    %         \protect\vfill%
-    %         % Ajuste fino para espaçamento entre figura e resumo e próximo
-    %         % artigo do sumário
-    %         \protect\vspace{1cm}%
-    %         \protect%
-    %     \end{minipage}
-    %     \vfill
-    % }
-    % \addtocontents{toc}{\vspace{2em}\par}
+    \addtocontents{toc}{%
+        % Definindo largura fixa para a minipage de texto com alinhamento
+        % superior
+        \begin{minipage}[t][.3cm][t]{9cm}
+            % Ajuste fino para alinhar o resumo do texto com o topo da figura
+            % (altere de acordo com o topo da figura)
+            \protect{\small #3}%
+            % Ajuste fino para alinhar o nome do autor do texto com el resumen
+            \protect\vfill%
+            % Ajuste fino para espaçamento entre figura e resumo e próximo
+            % artigo do sumário
+            \protect\vspace{1cm}%
+            \protect%
+        \end{minipage}
+        \vfill
+    }
+    \addtocontents{toc}{\vspace{2em}}
 }
 
 % Un dos comandos máis importantes. Debe usarse ao comezo de cada artigo.
