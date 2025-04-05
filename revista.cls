@@ -311,43 +311,43 @@
 % :FACER: 0 simplificar esto todo. Tal vez colocar as cadeas en arrays.
 % comandos que crean as liñas de separacion para organizar por temáticas o
 % indice
-\newcommand{\IndiceDivulgacion}{
-    \begin{tikzpicture}
-        \draw[thick] (0,0) -- (4,0);
-        \node[anchor=center] at (5.5,0)  {\textbf{Divulgacion}};
-        \draw[thick] (7,0) -- (11,0);
-    \end{tikzpicture}
-}
-\newcommand{\IndiceFilosofia}{
-    \begin{tikzpicture}
-        \draw[thick] (0,0) -- (4,0);
-        \node[anchor=center] at (5.5,0) {\textbf{Filosofía}};
-        \draw[thick] (7,0) -- (11,0);
-    \end{tikzpicture}
-}
-\newcommand{\IndiceHistoria}{
-    \begin{tikzpicture}
-        \draw[thick] (0,0) -- (4,0);
-        \node[anchor=center] at (5.5,0) {\textbf{Historia}};
-        \draw[thick] (7,0) -- (11,0);
-    \end{tikzpicture}
-}
-\newcommand{\IndiceProfesorado}{
-    \begin{tikzpicture}
-        \draw[thick] (0,0) -- (2.9,0);
-        \node[anchor=center] at (5.5,0) {\textbf{Recuncho do Profesorado}};
-        \draw[thick] (8.1,0) -- (11,0);
-    \end{tikzpicture}
-}
-\newcommand{\IndiceEntrevistas}{
-    \begin{tikzpicture}
-        \draw[thick] (0,0) -- (4,0);
-        \node[anchor=center] at (5.5,0)  {\textbf{Entrevistas}};
-        \draw[thick] (7,0) -- (11,0);
-    \end{tikzpicture}
-}
+\newcommand{\IndiceDivulgacion}{%
+    \begin{tikzpicture}%
+        \draw[thick] (0,0) -- (4,0);%
+        \node[anchor=center] at (5.5,0)  {\textbf{Divulgacion}};%
+        \draw[thick] (7,0) -- (11,0);%
+    \end{tikzpicture}%
+}%
+\newcommand{\IndiceFilosofia}{%
+    \begin{tikzpicture}%
+        \draw[thick] (0,0) -- (4,0);%
+        \node[anchor=center] at (5.5,0) {\textbf{Filosofía}};%
+        \draw[thick] (7,0) -- (11,0);%
+    \end{tikzpicture}%
+}%
+\newcommand{\IndiceHistoria}{%
+    \begin{tikzpicture}%
+        \draw[thick] (0,0) -- (4,0);%
+        \node[anchor=center] at (5.5,0) {\textbf{Historia}};%
+        \draw[thick] (7,0) -- (11,0);%
+    \end{tikzpicture}%
+}%
+\newcommand{\IndiceProfesorado}{%
+    \begin{tikzpicture}%
+        \draw[thick] (0,0) -- (2.9,0);%
+        \node[anchor=center] at (5.5,0) {\textbf{Recuncho do Profesorado}};%
+        \draw[thick] (8.1,0) -- (11,0);%
+    \end{tikzpicture}%
+}%
+\newcommand{\IndiceEntrevistas}{%
+    \begin{tikzpicture}%
+        \draw[thick] (0,0) -- (4,0);%
+        \node[anchor=center] at (5.5,0)  {\textbf{Entrevistas}};%
+        \draw[thick] (7,0) -- (11,0);%
+    \end{tikzpicture}%
+}%
 
-% :FACER: 0 simplificar esto con expl3
+% :FACER: simplificar esto con expl3
 \newcommand{\SeccionTOC}[1]{%
     \ifstrequal{#1}{divulgacion}{\IndiceDivulgacion}{%
         \ifstrequal{#1}{historia}{\IndiceHistoria}{%
@@ -369,41 +369,46 @@
 % #2 -> Nome do artigo
 % #3 -> Nome do autor
 % #4 -> Estilo da páxina (TIPO de artigo)
-\NewDocumentCommand\EngadeAoTOC{smmm}{%
+\NewDocumentCommand\EngadeAoTOC{ s m m m }{%
     % Empezamos a engadir cousas. Primeiro, o titulo (#2) e dependendo do
     % asterisco, engade unha seccion
     \addtocontents{toc}{%
-        \begingroup%
+        {% \begingroup%
             \setlength{\parindent}{0pt}%
             % Primeiro, engadimos seccion ao TOC ou no? Depende de se o macro
             % se usou cun asterisco ou no
-            \IfBooleanTF{#1}
-                {\SeccionTOC{#2}\\[2mm]}% ENGADIR SECCION
+            \IfBooleanTF{#1}%
+                % {BOASSSSSSSSSSSSSSSSSSSSSSSSSSSSs #1 #2 #3 #4}
+                % {BOASSSSSSSSSSSSSSSSSSSSSSSSSSSSs}%
+                {\SeccionTOC{profesorado} \vspace*{2mm}}% ENGADIR SECCION
+                % {\SeccionTOC{#4}\\[2mm]}% ENGADIR SECCION
                 {\vspace{-5mm}}% NON ENGADIR SECCION
-        \endgroup%
+        }% \endgroup%
     }
-    % Engadimo o nome do artigo
-    \addcontentsline{toc}{section}{\protect{#2}}
+    % Engadimos o nome do artigo
+    % \addcontentsline{toc}{section}{\protect{#2}}
     % Engadimos o nome do autor. Pa que quede ben metese nunha minipage
-    \addtocontents{toc}{%
-        % Definindo largura fixa para a minipage de texto com alinhamento
-        % superior
-        \begin{minipage}[t][.3cm][t]{9cm}
-            % Ajuste fino para alinhar o resumo do texto com o topo da figura
-            % (altere de acordo com o topo da figura)
-            \protect{\small #3}%
-            % Ajuste fino para alinhar o nome do autor do texto com el resumen
-            \protect\vfill%
-            % Ajuste fino para espaçamento entre figura e resumo e próximo
-            % artigo do sumário
-            \protect\vspace{1cm}%
-            \protect%
-        \end{minipage}\vfill}
-    \addtocontents{toc}{\vspace{2em}}
+    % \addtocontents{toc}{%
+    %     % Definindo largura fixa para a minipage de texto com alinhamento
+    %     % superior
+    %     \begin{minipage}[t][.3cm][t]{9cm}
+    %         % Ajuste fino para alinhar o resumo do texto com o topo da figura
+    %         % (altere de acordo com o topo da figura)
+    %         \protect{\small #3}%
+    %         % Ajuste fino para alinhar o nome do autor do texto com el resumen
+    %         \protect\vfill%
+    %         % Ajuste fino para espaçamento entre figura e resumo e próximo
+    %         % artigo do sumário
+    %         \protect\vspace{1cm}%
+    %         \protect%
+    %     \end{minipage}
+    %     \vfill
+    % }
+    % \addtocontents{toc}{\vspace{2em}\par}
 }
 
 % Un dos comandos máis importantes. Debe usarse ao comezo de cada artigo.
-\NewDocumentCommand\Titular{smmmm}{%
+\NewDocumentCommand\Titular{ s m m m m }{%
     % #1: (asterisco). Poñelo engade seccion ao toc
     % #2: nome do artigo,
     % #3: nome do autor,
@@ -429,11 +434,13 @@
         \vspace{3mm}
     \end{center}
     % Comprobamos se o comando \Titular se usou con un asterisco ou no
-    \IfBooleanTF{#1}
+    \IfBooleanTF{#1}%
         {% no caso de ter o asterisco, engadimos unha seccion ao TOC.
+            ESTASE ENGADINDO AO TOC #2 #3 #4 \vspace{2em}
             \EngadeAoTOC*{#2}{#3}{#4}%
         }%
         {% se non temos asterisco, non engadimos seccion
+            NON SE ENGADE AO TOC #2 #3 #4 \vspace{2em}
             \EngadeAoTOC{#2}{#3}{#4}%
         }
     \pagestyle{#4}%
@@ -459,7 +466,6 @@
     urlcolor  = {blue!80!black}   % URLs e links externos
 }
 
-% :FACER: macros e todo eso de aqui en abaixo. Mellor organizacion
 %% MACROS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \makeatletter
@@ -473,8 +479,8 @@
 \newcommand{\imprimeData}{\@Data}
 
 % Artigos
-\def\PrimeiroArtigo#1{\def\@PrimeiroArtigo{#1}}
-\newcommand{\imprimePrimeiroArtigo}{\@PrimeiroArtigo}
+% \def\PrimeiroArtigo#1{\def\@PrimeiroArtigo{#1}}
+% \newcommand{\imprimePrimeiroArtigo}{\@PrimeiroArtigo}
 % \def\SegundoArtigo#1{\def\@SegundoArtigo{#1}}
 % \newcommand{\imprimeSegundoArtigo}{\@SegundoArtigo}
 % \def\TerceiroArtigo#1{\def\@TerceiroArtigo{#1}}
